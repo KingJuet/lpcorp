@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ConnectToSQLServer;
 
 namespace IHMlpcorp
 {
@@ -15,6 +16,11 @@ namespace IHMlpcorp
         public Form1()
         {
             InitializeComponent();
+        }
+
+        private void btn_test_Click(object sender, EventArgs e)
+        {
+            Connection.TestConnection();
         }
     }
 }

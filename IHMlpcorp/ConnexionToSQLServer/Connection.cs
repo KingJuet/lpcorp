@@ -17,12 +17,12 @@ namespace ConnectToSQLServer
             return conn;
         }
 
-        public static void TestConnection(string adresse, string userId, string password, string name)
+        public static void TestConnection()
         {
             NpgsqlConnection conn = Connect("localhost", "julien", "zone51@", "lpcorp");
             conn.Open();
             // Define a query
-            NpgsqlCommand cmd = new NpgsqlCommand("select city from cities", conn);
+            NpgsqlCommand cmd = new NpgsqlCommand("select id from res_users", conn);
 
             // Execute a query
             NpgsqlDataReader dr = cmd.ExecuteReader();
