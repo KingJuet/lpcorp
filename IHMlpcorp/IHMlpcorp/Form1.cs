@@ -20,14 +20,7 @@ namespace IHMlpcorp
 
         private void buttonParcourir1_Click(object sender, EventArgs e)
         {
-            string sPath;
-            foreach (string sFileName in System.IO.Directory.GetFiles(sPath))
-            {
-                if (System.IO.Path.GetExtension(sFileName) == ".txt")
-                {
-                    //Do some treatments
-                }
-            }
+
         }
 
         private void btn_test_Click(object sender, EventArgs e)

@@ -118,22 +118,23 @@ namespace IHMlpcorp
             this.textBox4.TabIndex = 12;
             // 
             // button1
-            // btn_test
             // 
-            this.btn_test.Location = new System.Drawing.Point(107, 115);
-            this.btn_test.Name = "btn_test";
-            this.btn_test.Size = new System.Drawing.Size(75, 23);
-            this.btn_test.TabIndex = 0;
-            this.btn_test.Text = "TEST";
-            this.btn_test.UseVisualStyleBackColor = true;
-            this.btn_test.Click += new System.EventHandler(this.btn_test_Click);
             this.button1.Location = new System.Drawing.Point(192, 25);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(58, 24);
             this.button1.TabIndex = 13;
             this.button1.Text = "Parcourir";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // btn_test
+            // 
+            this.btn_test.Location = new System.Drawing.Point(249, 121);
+            this.btn_test.Name = "btn_test";
+            this.btn_test.Size = new System.Drawing.Size(75, 23);
+            this.btn_test.TabIndex = 0;
+            this.btn_test.Text = "TEST";
+            this.btn_test.UseVisualStyleBackColor = true;
+            this.btn_test.Click += new System.EventHandler(this.btn_test_Click);
             // 
             // button2
             // 
@@ -148,9 +149,8 @@ namespace IHMlpcorp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 262);
-            this.Controls.Add(this.btn_test);
             this.ClientSize = new System.Drawing.Size(359, 227);
+            this.Controls.Add(this.btn_test);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.textBox4);
