@@ -1,4 +1,6 @@
-﻿namespace IHMlpcorp
+﻿using System;
+
+namespace IHMlpcorp
 {
     partial class Form1
     {
@@ -168,6 +170,7 @@
         private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
+        private EventHandler button1_Click;
     }
 }
 
