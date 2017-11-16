@@ -22,8 +22,8 @@ namespace ConnectToSQLServer
             NpgsqlConnection conn = Connect("localhost", "julien", "zone51@", "lpcorp");
             conn.Open();
             // Define a query
-            NpgsqlCommand cmd = new NpgsqlCommand("select id from res_users", conn);
-
+            NpgsqlCommand cmd = new NpgsqlCommand("select name from res_partner", conn);
+            
             // Execute a query
             NpgsqlDataReader dr = cmd.ExecuteReader();
 
