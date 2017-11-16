@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace IHMlpcorp
+﻿namespace IHMlpcorp
 {
     partial class Form1
     {
@@ -124,7 +122,7 @@ namespace IHMlpcorp
             this.button1.TabIndex = 13;
             this.button1.Text = "Parcourir";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            
             // 
             // button2
             // 
@@ -170,7 +168,6 @@ namespace IHMlpcorp
         private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
-        private EventHandler button1_Click;
     }
 }
 
