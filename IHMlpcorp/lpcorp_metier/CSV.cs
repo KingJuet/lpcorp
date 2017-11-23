@@ -23,8 +23,9 @@ namespace lpcorp_metier
             return this.filePath;
         }
 
-        public void ExtractData()
+        public List<List<string>> ExtractData()
         {
+            List<List<string>> lesData = new List<List<string>>();
 
             if (this.filePath != "null")
             {
@@ -47,6 +48,7 @@ namespace lpcorp_metier
             {
                 Console.WriteLine("Aucun fichier n'a été chargé !");
             }
+            return lesData;
         }
 
  
