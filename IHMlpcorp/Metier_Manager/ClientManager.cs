@@ -9,18 +9,34 @@ namespace Metier_Manager
 {
     public class ClientManager
     {
-        private string filePath;
         private CSV file;
         private List<Client> lesClients;
         private bool isTreat;
         public ClientManager(string path)
         {
             this.isTreat = false;
-            this.filePath = path;
-            this.file = new CSV(this.filePath);
+            this.file = new CSV(path);
         }
-
-        public void 
+        private bool Formatage()
+        {
+            this.file.ExtractData();
+            for (int i = 0; i < file.GetData().Count; i++)
+            {
+                for (int j = 0; j < file.GetData()[i].Count; j++)
+                {
+                    Console.Write(" ");
+                    Console.Write(file.GetData()[i][j]);
+                }
+                Console.WriteLine("");
+            }
+            return true;
+        }
+        public bool ToDataBase()
+        {
+            this.Formatage();
+            return true;
+        }
+        
 
         
     }
