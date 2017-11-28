@@ -17,23 +17,18 @@ namespace Metier_Manager
             this.isTreat = false;
             this.file = new CSV(path);
         }
-        private bool Formatage()
+        private bool CreateClients()
         {
             this.file.ExtractData();
             for (int i = 0; i < file.GetData().Count; i++)
             {
-                for (int j = 0; j < file.GetData()[i].Count; j++)
-                {
-                    Console.Write(" ");
-                    Console.Write(file.GetData()[i][j]);
-                }
-                Console.WriteLine("");
+                this.lesClients.Add(new Client(file.GetData()[i][0], file.GetData()[i][1], file.GetData()[i][2], file.GetData()[i][3], file.GetData()[i][4], file.GetData()[i][5], file.GetData()[i][6], file.GetData()[i][7], file.GetData()[i][8], file.GetData()[i][9])); 
             }
             return true;
         }
         public bool ToDataBase()
         {
-            this.Formatage();
+
             return true;
         }
         
