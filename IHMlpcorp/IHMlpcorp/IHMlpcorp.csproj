@@ -80,9 +80,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ConnexionToSQLServer\ConnectToSQLServer.csproj">
+    <ProjectReference Include="..\ConnexionToSQLServer\RH_Donnees.csproj">
       <Project>{d207a877-681a-4c1f-8019-754eb7155ddf}</Project>
-      <Name>ConnectToSQLServer</Name>
+      <Name>RH_Donnees</Name>
     </ProjectReference>
     <ProjectReference Include="..\Metier_Manager\Metier_Manager.csproj">
       <Project>{c7ba6635-9efc-4b1e-827a-a316b7262311}</Project>

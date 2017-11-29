@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using ConnectToSQLServer;
+using RH_Donnees;
 using Metier_Manager;
 namespace IHMlpcorp
 {
@@ -31,7 +31,8 @@ namespace IHMlpcorp
 
             //Connection.AjoutDansBase(reader.Read());
             ClientManager cm = new ClientManager("G:\\Julien Rull\\Cours\\PPE\\Negomat_Client2.csv");
-            cm.ToDataBase();
+            bool res = cm.PushToDataBase();
+            Console.WriteLine(res.ToString());
             
         }
     }
