@@ -25,9 +25,49 @@ namespace lpcorp_IHM
             openFile.DefaultExt = "xls";
             openFile.Filter = "Fichier MapInfoFormat (*.xls)|*.xls";
             openFile.RestoreDirectory = true;
+
             if (openFile.ShowDialog() == DialogResult.OK)
                 fileLink = openFile.FileName;
             txt_parcourir.Text = fileLink;
-            }
+        }
+
+        private void ProgBar_prgbar_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void txt_AdresseServeur_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txt_Port_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txt_NomBase_TextChanged(object sender, EventArgs e)
+        {
+                   
+        }
+
+        private void txt_Utilisateur_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txt_Mdp_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txt_parcourir_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_Transferer_Click(object sender, EventArgs e)
+        {
+
         }
     }
+}
