@@ -58,6 +58,8 @@ namespace IHMlpcorp
             ClientManager cm = new ClientManager("G:\\Julien Rull\\Cours\\PPE\\Negomat_Client2.csv");
             bool res = cm.PushToDataBase();
             Console.WriteLine(res.ToString());
+            ClientManager cm = new ClientManager("F:\\Julien Rull\\Cours\\PPE\\Negomat_Client.csv");
+            cm.ToDataBase();
             
         }
     }
