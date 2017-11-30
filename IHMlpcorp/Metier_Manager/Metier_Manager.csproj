@@ -44,9 +44,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ConnexionToSQLServer\ConnectToSQLServer.csproj">
+    <ProjectReference Include="..\ConnexionToSQLServer\RH_Donnees.csproj">
       <Project>{d207a877-681a-4c1f-8019-754eb7155ddf}</Project>
-      <Name>ConnectToSQLServer</Name>
+      <Name>RH_Donnees</Name>
     </ProjectReference>
     <ProjectReference Include="..\lpcorp_metier\lpcorp_metier.csproj">
       <Project>{577d36f7-6e90-4188-8a9c-227645e37607}</Project>

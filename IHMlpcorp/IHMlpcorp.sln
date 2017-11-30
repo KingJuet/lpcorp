@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IHMlpcorp", "IHMlpcorp\IHMlpcorp.csproj", "{972F3CFE-B9C2-4182-893C-F596E10D3E2C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConnectToSQLServer", "ConnexionToSQLServer\ConnectToSQLServer.csproj", "{D207A877-681A-4C1F-8019-754EB7155DDF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RH_Donnees", "ConnexionToSQLServer\RH_Donnees.csproj", "{D207A877-681A-4C1F-8019-754EB7155DDF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lpcorp_metier", "lpcorp_metier\lpcorp_metier.csproj", "{577D36F7-6E90-4188-8A9C-227645E37607}"
 EndProject

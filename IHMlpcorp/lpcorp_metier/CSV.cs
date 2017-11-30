@@ -33,7 +33,7 @@ namespace lpcorp_metier
             return this.data;
         }
 
-        public List<List<string>> ExtractData()
+        public List<List<string>> Formater()
         {
             List<List<string>> lesData = new List<List<string>>();
             int ligne = 0;
@@ -49,6 +49,29 @@ namespace lpcorp_metier
                         lesData.Add(new List<string>());
                         for (int i = 0; i < values.Length; i++)
                         {
+                        switch (i)
+                        {
+                            case 0: // Code
+                                break;
+                            case 1: // Raison social
+                                break;
+                            case 2: // Adresse
+                                break;
+                            case 3: // CP
+                                break;
+                            case 4: // Ville
+                                break;
+                            case 5: // Tel
+                                break;
+                            case 6: // Fax
+                                break;
+                            case 7: // Email
+                                break;
+                            case 8: // Actif
+                                break;
+                            case 9: // Reglement
+                                break;
+                        }
                             lesData[ligne].Add(values[i]);
                         }
                     ligne++;

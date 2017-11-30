@@ -5,20 +5,23 @@ using System.Text;
 using System.Threading.Tasks;
 using Npgsql;
 
-namespace ConnectToSQLServer
+namespace RH_Donnees
 {
     public class Connection
     {
-        public static NpgsqlConnection Connect(string adresse, string userId, string password, string name)
+        public static NpgsqlConnection Connexion(string adresse, string userId, string password, string name)
         {
             NpgsqlConnection conn = new NpgsqlConnection("Server="+ adresse + ";User Id="+ userId + ";" +
                                 "Password="+ password + ";Database="+ name +";");
             return conn;
         }
 
+
+     
+
         public static void TestConnection()
         {
-            NpgsqlConnection conn = Connect("localhost", "julien", "zone51@", "lpcorp");
+            NpgsqlConnection conn = Connexion("localhost", "julien", "zone51@", "lpcorp");
             conn.Open();
             // Define a query
             NpgsqlCommand cmd = new NpgsqlCommand("select name from res_partner", conn);
@@ -34,9 +37,9 @@ namespace ConnectToSQLServer
             conn.Close();
         }
 
-        public static void AjoutDansBase(Dictionary<string, List<string>> data)
+        public static void AjoutDansBase()
         {
-            NpgsqlConnection conn = Connect("localhost", "julien", "zone51@", "lpcorp");
+            NpgsqlConnection conn = Connexion("localhost", "julien", "zone51@", "lpcorp");
             conn.Open();
             // Define a query
             NpgsqlCommand cmd = new NpgsqlCommand();
