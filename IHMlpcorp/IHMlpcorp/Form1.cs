@@ -20,7 +20,6 @@ namespace IHMlpcorp
 
         private void buttonParcourir1_Click(object sender, EventArgs e)
         {
-
         }
 
         private void btn_test_Click(object sender, EventArgs e)
@@ -33,6 +32,31 @@ namespace IHMlpcorp
             {
                 Console.WriteLine(s);
             }
+
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void txt_file1_Click(object sender, EventArgs e)
+        {
+            string fileLink = "";
+            OpenFileDialog file = new OpenFileDialog();
+            file.Filter = "XLS Files| *.xls";
+            file.RestoreDirectory = true;
+        }
+
+        private void text_file1_TextChanged(object sender, EventArgs e)
+        {
 
         }
     }

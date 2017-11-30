@@ -59,7 +59,7 @@ namespace IHMlpcorp
             }
             else
             {
-                Console.WriteLine("Aucun fichier n'a été charger !");
+                Console.WriteLine("Aucun fichier n'a été chargé !");
             }
         }
 
