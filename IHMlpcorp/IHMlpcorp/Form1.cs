@@ -7,8 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using ConnectToSQLServer;
-
+using RH_Donnees;
+using Metier_Manager;
 namespace IHMlpcorp
 {
     public partial class Form1 : Form
@@ -58,6 +58,14 @@ namespace IHMlpcorp
         private void text_file1_TextChanged(object sender, EventArgs e)
         {
 
+            // CsvReader reader = new CsvReader(new string[] { "CODE", "RAISON SOCIALE", "ADRESSE", "CP", "VILLE", "TEL", "FAX", "EMAIL", "ACTIF", "REGLEMENT" });
+            //reader.LoadFile("F:\\Julien Rull\\Cours\\PPE\\Negomat_Client2.csv");
+
+            //Connection.AjoutDansBase(reader.Read());
+            ClientManager cm = new ClientManager("G:\\Julien Rull\\Cours\\PPE\\Negomat_Client2.csv");
+            bool res = cm.PushToDataBase();
+            Console.WriteLine(res.ToString());
+            
         }
     }
 }

@@ -4,22 +4,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Npgsql;
-namespace ConnectToSQLServer
+
+namespace RH_Donnees
 {
     public class Connection
     {
-
-        public static NpgsqlConnection Connect(string adresse, string userId, string password, string name)
+        public static NpgsqlConnection Connexion(string adresse, string userId, string password, string name)
         {
             NpgsqlConnection conn = new NpgsqlConnection("Server="+ adresse + ";User Id="+ userId + ";" +
                                 "Password="+ password + ";Database="+ name +";");
-
             return conn;
         }
 
+
+     
+
         public static void TestConnection()
         {
-            NpgsqlConnection conn = Connect("localhost", "julien", "zone51@", "lpcorp");
+            NpgsqlConnection conn = Connexion("localhost", "julien", "zone51@", "lpcorp");
             conn.Open();
             // Define a query
             NpgsqlCommand cmd = new NpgsqlCommand("select name from res_partner", conn);
@@ -32,6 +34,26 @@ namespace ConnectToSQLServer
                 Console.Write("{0}\n", dr[0]);
 
             // Close connection
+            conn.Close();
+        }
+
+        public static void AjoutDansBase()
+        {
+            NpgsqlConnection conn = Connexion("localhost", "julien", "zone51@", "lpcorp");
+            conn.Open();
+            // Define a query
+            NpgsqlCommand cmd = new NpgsqlCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "INSERT INTO res_partner (id, city) VALUES (2, @p);";
+            cmd.Parameters.AddWithValue("p", "test");
+            // Execute a query
+
+
+            cmd.ExecuteNonQuery();
+            //foreach(string s in data["VILLE"]){
+            //cmd = new NpgsqlCommand("INSERT INTO res_partner (city) VALUES ("+s+");", conn);
+            //cmd.ExecuteNonQuery();
+            // }
             conn.Close();
         }
 
