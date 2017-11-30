@@ -24,9 +24,9 @@ namespace IHMlpcorp
 
         private void btn_test_Click(object sender, EventArgs e)
         {
-         
 
         }
+
 
         private void button5_Click(object sender, EventArgs e)
         {
