@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lpcorp_metier", "lpcorp_met
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Metier_Manager", "Metier_Manager\Metier_Manager.csproj", "{C7BA6635-9EFC-4B1E-827A-A316B7262311}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApplication1", "WindowsFormsApplication1\WindowsFormsApplication1.csproj", "{A5C20FC8-64C9-47B6-BE73-0319A41C8473}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lpcorp_IHM", "WindowsFormsApplication1\lpcorp_IHM.csproj", "{A5C20FC8-64C9-47B6-BE73-0319A41C8473}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

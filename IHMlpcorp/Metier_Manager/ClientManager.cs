@@ -26,7 +26,7 @@ namespace Metier_Manager
                 if(i != 0)
                 {
                     
-                    this.lesClients.Add(new Client(i + 6, file.GetData()[i][1], file.GetData()[i][2], file.GetData()[i][3], file.GetData()[i][4], 
+                    this.lesClients.Add(new Client(i + 7, file.GetData()[i][1], file.GetData()[i][2], file.GetData()[i][3], file.GetData()[i][4], 
                                                      file.GetData()[i][5], file.GetData()[i][6], file.GetData()[i][7], file.GetData()[i][8], 
                                                      file.GetData()[i][9]));
                 }
@@ -37,15 +37,7 @@ namespace Metier_Manager
         public bool PushToDataBase()
         {
             this.CreateClients();
-            int nbPush = 0;
-            foreach(Client c in this.lesClients)
-            {
-                DAOClient.AjouterClient(c);
-                nbPush++;
-            }
-            Console.WriteLine(nbPush);
-            //Connection.AjoutDansBase();
-            
+            DAOClient.AjouterDesClients(this.lesClients);
             return true;
         }
         

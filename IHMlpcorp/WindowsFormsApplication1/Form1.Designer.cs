@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApplication1
+﻿namespace lpcorp_IHM
 {
     partial class LPCORP_Frm
     {
@@ -59,6 +59,7 @@
             this.btn_Transferer.TabIndex = 2;
             this.btn_Transferer.Text = "Transférer";
             this.btn_Transferer.UseVisualStyleBackColor = true;
+            this.btn_Transferer.Click += new System.EventHandler(this.btn_Transferer_Click);
             // 
             // LPCORP_Frm
             // 

@@ -29,7 +29,50 @@ namespace RH_Donnees
                 cmd.Parameters.AddWithValue("p8", unClient.Email);
                 //cmd.Parameters.AddWithValue("p9", unClient.Actif);
                 cmd.ExecuteNonQuery();
-            }catch(Exception e)
+                conn.Close();
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            
+        }
+
+
+        public static void AjouterDesClients(List<Client> lstClients)
+        {
+            string commande = "INSERT INTO res_partner (name, street, zip, city, phone, fax, email, active) VALUES ";
+            
+            for (int i = 0; i < lstClients.Count; i++)
+            {
+
+
+                
+                commande += "(" + "'"+lstClients[i].RaisonSociale + "'"+ ", " +  "'" +lstClients[i].Adresse + "'" + ", " + "'" + lstClients[i].Cp + "'" + ", "+
+                            "'" + lstClients[i].Ville + "'" + ", " + "'" + lstClients[i].Tel + "'" + ", " + "'" + lstClients[i].Fax + "'" + ", " + "'" + lstClients[i].Email + "'" + ", " + lstClients[i].Actif + ")";
+
+
+                if (i < lstClients.Count - 1)
+                {
+                    commande += ",";
+                }
+
+            }
+            commande += ";";
+
+            try
+            {
+                NpgsqlConnection conn = Connection.Connexion("localhost", "julien", "zone51@", "lpcorp");
+                conn.Open();
+
+                NpgsqlCommand cmd = new NpgsqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = commande;
+
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
@@ -37,3 +80,5 @@ namespace RH_Donnees
         }
     }
 }
+
+

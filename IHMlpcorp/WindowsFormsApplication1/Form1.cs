@@ -7,14 +7,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
-namespace WindowsFormsApplication1
+using Metier_Manager;
+namespace lpcorp_IHM
 {
     public partial class LPCORP_Frm : Form
     {
         public LPCORP_Frm()
         {
             InitializeComponent();
+        }
+
+        private void btn_Transferer_Click(object sender, EventArgs e)
+        {
+            ClientManager cm = new ClientManager("F:\\Julien Rull\\Cours\\PPE\\Negomat_Client.csv");
+            cm.PushToDataBase();
+
         }
     }
 }
