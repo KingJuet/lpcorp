@@ -30,7 +30,7 @@ namespace IHMlpcorp
             //reader.LoadFile("F:\\Julien Rull\\Cours\\PPE\\Negomat_Client2.csv");
 
             //Connection.AjoutDansBase(reader.Read());
-            ClientManager cm = new ClientManager("G:\\Julien Rull\\Cours\\PPE\\Negomat_Client2.csv");
+            ClientManager cm = new ClientManager("F:\\Julien Rull\\Cours\\PPE\\Negomat_Client.csv");
             cm.ToDataBase();
             
         }
