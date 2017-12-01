@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Metier_Manager;
-namespace lpcorp_IHM
+
 
 namespace lpcorp_IHM
 {
@@ -25,7 +25,7 @@ namespace lpcorp_IHM
 
             OpenFileDialog openFile = new OpenFileDialog();
             openFile.DefaultExt = "xls";
-            openFile.Filter = "Fichier MapInfoFormat (*.xls)|*.xls";
+            openFile.Filter = "Fichier MapInfoFormat (*.csv)|*.csv";
             openFile.RestoreDirectory = true;
 
             if (openFile.ShowDialog() == DialogResult.OK)
@@ -67,14 +67,11 @@ namespace lpcorp_IHM
 
         }
 
-        private void btn_Transferer_Click(object sender, EventArgs e)
-        {
 
-        }
 
         private void btn_Transferer_Click(object sender, EventArgs e)
         {
-            ClientManager cm = new ClientManager("F:\\Julien Rull\\Cours\\PPE\\Negomat_Client.csv");
+            ClientManager cm = new ClientManager(txt_parcourir.Text);
             cm.PushToDataBase();
 
         }

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Text.RegularExpressions;
-
+using System.Net.Mail;
 namespace lpcorp_metier
 {
     public class CSV
@@ -62,12 +62,11 @@ namespace lpcorp_metier
                             case 2: // Adresse
                                 break;
                             case 3: // CP
-                                this.myRegex = new Regex("[0-9]{5}");
+                                this.myRegex = new Regex("^[0-9]{5}$");
                                 if (!this.myRegex.IsMatch(values[i]))
                                 {
                                     values[i] = "";
                                 }
-                                values[i] = this.myRegex.Replace(values[i], "");
                                 break;
                             case 4: // Ville
                                 break;
@@ -106,6 +105,16 @@ namespace lpcorp_metier
                                 }
                                 break;
                             case 7: // Email
+
+                                values[i] = Regex.Replace(values[i], "[A-Z]*", m => " " + m.ToString().ToLower(), RegexOptions.IgnoreCase);
+                                this.myRegex = new Regex(" ");
+                                values[i] = this.myRegex.Replace(values[i], "");
+
+                                this.myRegex = new Regex(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$");
+                                if (!this.myRegex.IsMatch(values[i]))
+                                {
+                                 values[i] = "";
+                                }
                                 break;
                             case 8: // Actif
                                 this.myRegex = new Regex("((o|O)ui|(n|N)on)");
@@ -137,10 +146,7 @@ namespace lpcorp_metier
                                 break;
                         }
                         values[i] = values[i].Replace("'", "");
-                        //values[i] = values[i].Replace("\"", "");
-                        //values[i] = values[i].Replace(".", "");
-                        //values[i] = values[i].Replace("-", "");
-                        //values[i] = values[i].Replace(",", "");
+
                         lesData[ligne].Add(values[i]);
                         }
                     ligne++;

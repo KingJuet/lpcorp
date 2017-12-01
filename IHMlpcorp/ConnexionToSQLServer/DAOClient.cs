@@ -41,24 +41,40 @@ namespace RH_Donnees
 
         public static void AjouterDesClients(List<Client> lstClients)
         {
-            string commande = "INSERT INTO res_partner (name, street, zip, city, phone, fax, email, active) VALUES ";
-            
+            string commande1 = "INSERT INTO res_partner (name, street, zip, city, phone, fax, email, active) VALUES ";
+            string commande2 = "INSERT INTO ir_property (name, res_id) VALUES ";
             for (int i = 0; i < lstClients.Count; i++)
             {
 
 
-                
-                commande += "(" + "'"+lstClients[i].RaisonSociale + "'"+ ", " +  "'" +lstClients[i].Adresse + "'" + ", " + "'" + lstClients[i].Cp + "'" + ", "+
+
+                commande1 += "(" + "'"+lstClients[i].RaisonSociale + "'"+ ", " +  "'" +lstClients[i].Adresse + "'" + ", " + "'" + lstClients[i].Cp + "'" + ", "+
                             "'" + lstClients[i].Ville + "'" + ", " + "'" + lstClients[i].Tel + "'" + ", " + "'" + lstClients[i].Fax + "'" + ", " + "'" + lstClients[i].Email + "'" + ", " + lstClients[i].Actif + ")";
 
 
                 if (i < lstClients.Count - 1)
                 {
-                    commande += ",";
+                    commande1 += ",";
                 }
 
             }
-            commande += ";";
+            commande1 += ";";
+
+            for (int i = 0; i < lstClients.Count; i++)
+            {
+
+
+
+                commande2 += "(" + "'" + lstClients[i].Reglement + "'" + ", " + "'res.patner," + lstClients[i].Id.ToString() +"'"+ ")";
+
+
+                if (i < lstClients.Count - 1)
+                {
+                    commande2 += ",";
+                }
+
+            }
+            commande2 += ";";
 
             try
             {
@@ -67,9 +83,14 @@ namespace RH_Donnees
 
                 NpgsqlCommand cmd = new NpgsqlCommand();
                 cmd.Connection = conn;
-                cmd.CommandText = commande;
+                cmd.CommandText = commande1;
 
                 cmd.ExecuteNonQuery();
+
+                cmd.CommandText = commande2;
+
+                cmd.ExecuteNonQuery();
+
                 conn.Close();
             }
             catch (Exception e)

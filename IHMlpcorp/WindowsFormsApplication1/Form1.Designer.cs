@@ -163,7 +163,6 @@
             this.lbl_Mdp.Size = new System.Drawing.Size(94, 17);
             this.lbl_Mdp.TabIndex = 10;
             this.lbl_Mdp.Text = "Mot de passe";
-            this.btn_Transferer.Click += new System.EventHandler(this.btn_Transferer_Click);
             // 
             // txt_NomBase
             // 
