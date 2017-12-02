@@ -11,7 +11,6 @@ namespace lpcorp_metier
     public class CSV
     {
         private string filePath; 
-        private List<List<string>> data;
         private StreamReader reader;
         private Regex myRegex;
       
@@ -20,7 +19,6 @@ namespace lpcorp_metier
         {
             this.filePath = path;
             this.reader = new StreamReader(path);
-            this.data = new List<List<string>>();
             myRegex = new Regex("([a-z]+|[A-Z]+)");
         }
 
@@ -30,18 +28,16 @@ namespace lpcorp_metier
             return this.filePath;
         }
 
-        public List<List<string>> GetData()
-        {
-            return this.data;
-        }
 
-        public List<List<string>> Formater()
+        public List<List<string>> Formater(Rapport rap)
         {
             string isAPhone = "[0-9]{10}";
             string delete = "(\\.|\\-|,|\"|'| )";
             string containeChars = "([a-z]+|[A-Z]+)";
             string idem = "IDEM";
             List<List<string>> lesData = new List<List<string>>();
+            List<string> laLigne = new List<string>();
+            bool inserer = false;
             int ligne = 0;
             if (this.filePath != "null")
             {
@@ -52,7 +48,7 @@ namespace lpcorp_metier
                     string[] values = line.Split(';');
 
 
-                        lesData.Add(new List<string>());
+
                         for (int i = 0; i < values.Length; i++)
                         {
                         switch (i)
@@ -60,6 +56,12 @@ namespace lpcorp_metier
                             case 1: // Raison social
                                 break;
                             case 2: // Adresse
+                                this.myRegex = new Regex("");
+                                if (!this.myRegex.IsMatch(values[i]))
+                                {
+                                    inserer = true;
+                                }
+                                
                                 break;
                             case 3: // CP
                                 this.myRegex = new Regex("^[0-9]{5}$");
@@ -86,6 +88,10 @@ namespace lpcorp_metier
                                 {
                                 values[i] = "";
                                 }
+                                else
+                                {
+                                    inserer = true;
+                                }
 
                                 break;
                             case 6: // Fax
@@ -103,6 +109,10 @@ namespace lpcorp_metier
                                 {
                                     values[i] = "";
                                 }
+                                else
+                                {
+                                    inserer = true;
+                                }
                                 break;
                             case 7: // Email
 
@@ -114,6 +124,11 @@ namespace lpcorp_metier
                                 if (!this.myRegex.IsMatch(values[i]))
                                 {
                                  values[i] = "";
+                                    rap.NbInvalidEmail++;
+                                }
+                                else
+                                {
+                                    inserer = true;
                                 }
                                 break;
                             case 8: // Actif
@@ -147,16 +162,27 @@ namespace lpcorp_metier
                         }
                         values[i] = values[i].Replace("'", "");
 
-                        lesData[ligne].Add(values[i]);
+                        laLigne.Add(values[i]);
+                        
                         }
-                    ligne++;
+                    if (inserer)
+                    {
+                        lesData.Add(laLigne.ToList());
+                        ligne++;
+                        inserer = false;
+                        rap.NbLignesInserees++;
+                    }
+                    laLigne.Clear();
+                    rap.NbLignesTraitees++;
                 }
+                
             }
             else
             {
                 Console.WriteLine("Aucun fichier n'a été chargé !");
             }
-            this.data = lesData;
+            
+            //Console.WriteLine(this.data[1].Count.ToString());
             return lesData;
         }
 
