@@ -12,11 +12,13 @@ namespace Metier_Manager
         private Rapport rapport;
         private List<Client> lesClients;
         private bool isTreat;
-        public ClientManager(string path)
+        private DAOClient pusher;
+        public ClientManager(string path, DAOClient uneConnexion)
         {
             this.isTreat = false;
             this.rapport = new Rapport(path);
             this.lesClients = new List<Client>();
+            this.pusher = uneConnexion;
         }
         private bool CreateClients()
         {
@@ -34,7 +36,7 @@ namespace Metier_Manager
         public bool PushToDataBase()
         {
             this.CreateClients();
-            DAOClient.AjouterDesClients(this.lesClients);
+            this.pusher.AjouterDesClients(this.lesClients);
             return true;
         }
 

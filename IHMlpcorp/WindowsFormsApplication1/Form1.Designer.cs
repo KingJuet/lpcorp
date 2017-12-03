@@ -63,12 +63,14 @@
             // btn_Ajouter
             // 
             this.btn_Ajouter.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_Ajouter.Enabled = false;
             this.btn_Ajouter.Location = new System.Drawing.Point(2, 189);
             this.btn_Ajouter.Name = "btn_Ajouter";
             this.btn_Ajouter.Size = new System.Drawing.Size(75, 23);
             this.btn_Ajouter.TabIndex = 6;
             this.btn_Ajouter.Text = "Ajouter";
             this.btn_Ajouter.UseVisualStyleBackColor = true;
+            this.btn_Ajouter.Click += new System.EventHandler(this.btn_Ajouter_Click);
             // 
             // btn_Transferer
             // 
@@ -113,6 +115,7 @@
             this.btn_Supprimer.TabIndex = 7;
             this.btn_Supprimer.Text = "Supprimer";
             this.btn_Supprimer.UseVisualStyleBackColor = true;
+            this.btn_Supprimer.Click += new System.EventHandler(this.btn_Supprimer_Click);
             // 
             // lbl_AdresseServeur
             // 
@@ -225,6 +228,7 @@
             // btn_DemRapport
             // 
             this.btn_DemRapport.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_DemRapport.Enabled = false;
             this.btn_DemRapport.Location = new System.Drawing.Point(2, 297);
             this.btn_DemRapport.Name = "btn_DemRapport";
             this.btn_DemRapport.Size = new System.Drawing.Size(121, 23);

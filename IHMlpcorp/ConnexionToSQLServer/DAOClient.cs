@@ -7,13 +7,18 @@ using lpcorp_metier;
 using Npgsql;
 namespace RH_Donnees
 {
-    public static class DAOClient
+    public class DAOClient
     {
-        public static void AjouterClient(Client unClient)
+        private Connection connexion;
+        public DAOClient(string adresse, string login, string password, string bddName)
+        {
+            this.connexion = new Connection(login, password, adresse, bddName);
+        }
+        public void AjouterClient(Client unClient)
         {
             try
             {
-                NpgsqlConnection conn = Connection.Connexion("localhost", "julien", "zone51@", "lpcorp");
+                NpgsqlConnection conn = this.connexion.GetConnexion();
                 conn.Open();
 
                 NpgsqlCommand cmd = new NpgsqlCommand();
@@ -39,7 +44,7 @@ namespace RH_Donnees
         }
 
 
-        public static void AjouterDesClients(List<Client> lstClients)
+        public void AjouterDesClients(List<Client> lstClients)
         {
             string commande1 = "INSERT INTO res_partner (name, street, zip, city, phone, fax, email, active) VALUES ";
             string commande2 = "INSERT INTO ir_property (name, res_id) VALUES ";
@@ -78,7 +83,7 @@ namespace RH_Donnees
 
             try
             {
-                NpgsqlConnection conn = Connection.Connexion("localhost", "julien", "zone51@", "lpcorp");
+                NpgsqlConnection conn = this.connexion.GetConnexion();
                 conn.Open();
 
                 NpgsqlCommand cmd = new NpgsqlCommand();
