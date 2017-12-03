@@ -80,10 +80,10 @@ namespace lpcorp_IHM
 
         private void btn_DemRapport_Click(object sender, EventArgs e)
         {
-            MailMessage mail = new MailMessage("julien.rull38@gmail.com", txt_AdresseServeur.Text, "Rapport d'importation", txt_rapport.Text);
+            MailMessage mail = new MailMessage("", txt_AdresseServeur.Text, "Rapport d'importation", txt_rapport.Text);
             SmtpClient client = new SmtpClient("smtp.gmail.com");
             client.Port = 587;
-            client.Credentials = new System.Net.NetworkCredential("julien.rull38@gmail.com", "");
+            client.Credentials = new System.Net.NetworkCredential("", "");
             client.EnableSsl = true;
             client.Send(mail);
         }
