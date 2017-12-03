@@ -43,11 +43,11 @@
             this.txt_Port = new System.Windows.Forms.TextBox();
             this.txt_Utilisateur = new System.Windows.Forms.TextBox();
             this.txt_Mdp = new System.Windows.Forms.TextBox();
-            this.lst_ListeInfos = new System.Windows.Forms.ListBox();
             this.ProgBar_prgbar = new System.Windows.Forms.ProgressBar();
             this.lbl_MailRapport = new System.Windows.Forms.Label();
             this.txt_MailRapport = new System.Windows.Forms.TextBox();
             this.btn_DemRapport = new System.Windows.Forms.Button();
+            this.txt_rapport = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // btn_Parcourir
@@ -197,16 +197,6 @@
             this.txt_Mdp.TabIndex = 5;
             this.txt_Mdp.TextChanged += new System.EventHandler(this.txt_Mdp_TextChanged);
             // 
-            // lst_ListeInfos
-            // 
-            this.lst_ListeInfos.Cursor = System.Windows.Forms.Cursors.No;
-            this.lst_ListeInfos.FormattingEnabled = true;
-            this.lst_ListeInfos.Location = new System.Drawing.Point(248, 72);
-            this.lst_ListeInfos.Name = "lst_ListeInfos";
-            this.lst_ListeInfos.ScrollAlwaysVisible = true;
-            this.lst_ListeInfos.Size = new System.Drawing.Size(330, 147);
-            this.lst_ListeInfos.TabIndex = 9;
-            // 
             // ProgBar_prgbar
             // 
             this.ProgBar_prgbar.Location = new System.Drawing.Point(2, 225);
@@ -241,6 +231,16 @@
             this.btn_DemRapport.TabIndex = 19;
             this.btn_DemRapport.Text = "Demander le rapport";
             this.btn_DemRapport.UseVisualStyleBackColor = true;
+            this.btn_DemRapport.Click += new System.EventHandler(this.btn_DemRapport_Click);
+            // 
+            // txt_rapport
+            // 
+            this.txt_rapport.Location = new System.Drawing.Point(245, 68);
+            this.txt_rapport.Multiline = true;
+            this.txt_rapport.Name = "txt_rapport";
+            this.txt_rapport.ReadOnly = true;
+            this.txt_rapport.Size = new System.Drawing.Size(322, 144);
+            this.txt_rapport.TabIndex = 20;
             // 
             // LPCORP_Frm
             // 
@@ -249,11 +249,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btn_Supprimer;
             this.ClientSize = new System.Drawing.Size(579, 359);
+            this.Controls.Add(this.txt_rapport);
             this.Controls.Add(this.btn_DemRapport);
             this.Controls.Add(this.txt_MailRapport);
             this.Controls.Add(this.lbl_MailRapport);
             this.Controls.Add(this.ProgBar_prgbar);
-            this.Controls.Add(this.lst_ListeInfos);
             this.Controls.Add(this.txt_Mdp);
             this.Controls.Add(this.txt_Utilisateur);
             this.Controls.Add(this.txt_Port);
@@ -293,11 +293,11 @@
         private System.Windows.Forms.TextBox txt_Port;
         private System.Windows.Forms.TextBox txt_Utilisateur;
         private System.Windows.Forms.TextBox txt_Mdp;
-        private System.Windows.Forms.ListBox lst_ListeInfos;
         private System.Windows.Forms.ProgressBar ProgBar_prgbar;
         private System.Windows.Forms.Label lbl_MailRapport;
         private System.Windows.Forms.TextBox txt_MailRapport;
         private System.Windows.Forms.Button btn_DemRapport;
+        private System.Windows.Forms.TextBox txt_rapport;
     }
 }
 

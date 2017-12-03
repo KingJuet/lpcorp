@@ -9,6 +9,20 @@ namespace RH_Donnees
 {
     public class Connection
     {
+
+        private string login;
+        private string password;
+        private string adresse;
+        private string bddName;
+
+        public Connection(string unLogin, string unPassword, string uneAdresse, string unNom)
+        {
+            this.login = unLogin;
+            this.password = unPassword;
+            this.adresse = uneAdresse;
+            this.bddName = unNom;
+        }
+
         public static NpgsqlConnection Connexion(string adresse, string userId, string password, string name)
         {
             NpgsqlConnection conn = new NpgsqlConnection("Server="+ adresse + ";User Id="+ userId + ";" +

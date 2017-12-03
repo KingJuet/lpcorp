@@ -30,11 +30,11 @@ namespace lpcorp_metier
 
         public override string ToString()
         {
-            return "Rapport : \n" 
-                    + "Lignes Traitées : " + this.nbLignesTraitees + "\n"
-                    + "Lignes Insérées : " + this.nbLignesInserees + "\n"
-                    + "Doublons : " + this.nbDoublon + "\n"
-                    + "Emails invalides : " + this.nbInvalidEmail + "\n";
+            return "Rapport : \r\n"
+                    + "Lignes Traitées : " + this.nbLignesTraitees + "\r\n"
+                    + "Lignes Insérées : " + this.nbLignesInserees + "\r\n"
+                    + "Doublons : " + this.nbDoublon + "\r\n"
+                    + "Emails invalides : " + this.nbInvalidEmail + "\r\n";
         }
         public int NbLignesTraitees
         {

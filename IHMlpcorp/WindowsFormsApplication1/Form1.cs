@@ -8,7 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Metier_Manager;
-
+using System.Web;
+using System.Net.Mail;
 
 namespace lpcorp_IHM
 {
@@ -73,7 +74,18 @@ namespace lpcorp_IHM
         {
             ClientManager cm = new ClientManager(txt_parcourir.Text);
             cm.PushToDataBase();
+            Console.WriteLine(cm.GetRapport());
+            txt_rapport.Text = cm.GetRapport();
+        }
 
+        private void btn_DemRapport_Click(object sender, EventArgs e)
+        {
+            MailMessage mail = new MailMessage("julien.rull38@gmail.com", txt_AdresseServeur.Text, "Rapport d'importation", txt_rapport.Text);
+            SmtpClient client = new SmtpClient("smtp.gmail.com");
+            client.Port = 587;
+            client.Credentials = new System.Net.NetworkCredential("julien.rull38@gmail.com", "");
+            client.EnableSsl = true;
+            client.Send(mail);
         }
     }
 }

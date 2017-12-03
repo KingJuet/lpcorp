@@ -38,9 +38,9 @@ namespace Metier_Manager
             return true;
         }
 
-        public Rapport GetRapport()
+        public string GetRapport()
         {
-            return this.rapport;
+            return this.rapport.ToString();
         }
         
 
