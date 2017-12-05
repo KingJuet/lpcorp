@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Metier_Manager;
-namespace lpcorp_IHM
+
 
 namespace lpcorp_IHM
 {
@@ -67,10 +67,6 @@ namespace lpcorp_IHM
 
         }
 
-        private void btn_Transferer_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void btn_Transferer_Click(object sender, EventArgs e)
         {
