@@ -48,6 +48,7 @@
             this.txt_MailRapport = new System.Windows.Forms.TextBox();
             this.btn_DemRapport = new System.Windows.Forms.Button();
             this.txt_rapport = new System.Windows.Forms.TextBox();
+            this.lbl_erreur = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btn_Parcourir
@@ -92,7 +93,7 @@
             this.txt_parcourir.Location = new System.Drawing.Point(2, 41);
             this.txt_parcourir.Name = "txt_parcourir";
             this.txt_parcourir.ReadOnly = true;
-            this.txt_parcourir.Size = new System.Drawing.Size(576, 21);
+            this.txt_parcourir.Size = new System.Drawing.Size(523, 21);
             this.txt_parcourir.TabIndex = 3;
             this.txt_parcourir.Text = "Le chemin du fichier va s\'afficher ici";
             this.txt_parcourir.TextChanged += new System.EventHandler(this.txt_parcourir_TextChanged);
@@ -103,6 +104,7 @@
             this.txt_AdresseServeur.Name = "txt_AdresseServeur";
             this.txt_AdresseServeur.Size = new System.Drawing.Size(129, 20);
             this.txt_AdresseServeur.TabIndex = 1;
+            this.txt_AdresseServeur.Text = "localhost";
             this.txt_AdresseServeur.TextChanged += new System.EventHandler(this.txt_AdresseServeur_TextChanged);
             // 
             // btn_Supprimer
@@ -173,6 +175,7 @@
             this.txt_NomBase.Name = "txt_NomBase";
             this.txt_NomBase.Size = new System.Drawing.Size(129, 20);
             this.txt_NomBase.TabIndex = 3;
+            this.txt_NomBase.Text = "lpcorp";
             this.txt_NomBase.TextChanged += new System.EventHandler(this.txt_NomBase_TextChanged);
             // 
             // txt_Port
@@ -181,6 +184,7 @@
             this.txt_Port.Name = "txt_Port";
             this.txt_Port.Size = new System.Drawing.Size(32, 20);
             this.txt_Port.TabIndex = 2;
+            this.txt_Port.Text = "80";
             this.txt_Port.TextChanged += new System.EventHandler(this.txt_Port_TextChanged);
             // 
             // txt_Utilisateur
@@ -189,6 +193,7 @@
             this.txt_Utilisateur.Name = "txt_Utilisateur";
             this.txt_Utilisateur.Size = new System.Drawing.Size(100, 20);
             this.txt_Utilisateur.TabIndex = 4;
+            this.txt_Utilisateur.Text = "julien";
             this.txt_Utilisateur.TextChanged += new System.EventHandler(this.txt_Utilisateur_TextChanged);
             // 
             // txt_Mdp
@@ -198,6 +203,7 @@
             this.txt_Mdp.PasswordChar = '●';
             this.txt_Mdp.Size = new System.Drawing.Size(100, 20);
             this.txt_Mdp.TabIndex = 5;
+            this.txt_Mdp.Text = "zone51@";
             this.txt_Mdp.TextChanged += new System.EventHandler(this.txt_Mdp_TextChanged);
             // 
             // ProgBar_prgbar
@@ -246,6 +252,14 @@
             this.txt_rapport.Size = new System.Drawing.Size(322, 144);
             this.txt_rapport.TabIndex = 20;
             // 
+            // lbl_erreur
+            // 
+            this.lbl_erreur.AutoSize = true;
+            this.lbl_erreur.Location = new System.Drawing.Point(259, 297);
+            this.lbl_erreur.Name = "lbl_erreur";
+            this.lbl_erreur.Size = new System.Drawing.Size(0, 13);
+            this.lbl_erreur.TabIndex = 21;
+            // 
             // LPCORP_Frm
             // 
             this.AcceptButton = this.btn_Ajouter;
@@ -253,6 +267,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btn_Supprimer;
             this.ClientSize = new System.Drawing.Size(579, 359);
+            this.Controls.Add(this.lbl_erreur);
             this.Controls.Add(this.txt_rapport);
             this.Controls.Add(this.btn_DemRapport);
             this.Controls.Add(this.txt_MailRapport);
@@ -302,6 +317,7 @@
         private System.Windows.Forms.TextBox txt_MailRapport;
         private System.Windows.Forms.Button btn_DemRapport;
         private System.Windows.Forms.TextBox txt_rapport;
+        private System.Windows.Forms.Label lbl_erreur;
     }
 }
 

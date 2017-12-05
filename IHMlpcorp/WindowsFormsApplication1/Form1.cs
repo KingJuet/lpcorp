@@ -16,9 +16,11 @@ namespace lpcorp_IHM
     public partial class LPCORP_Frm : Form
     {
         string fileLink;
+        ErrorProvider erreurIcone;
         public LPCORP_Frm()
         {
             InitializeComponent();
+            erreurIcone = new ErrorProvider();
         }
 
         private void btn_Parcourir_Click(object sender, EventArgs e)
@@ -32,6 +34,7 @@ namespace lpcorp_IHM
             if (openFile.ShowDialog() == DialogResult.OK)
                 fileLink = openFile.FileName;
             txt_parcourir.Text = fileLink;
+            erreurIcone.Clear();
         }
 
         private void ProgBar_prgbar_Click(object sender, EventArgs e)
@@ -72,21 +75,38 @@ namespace lpcorp_IHM
 
         private void btn_Transferer_Click(object sender, EventArgs e)
         {
-            DAOClient newConnexion = new DAOClient(txt_AdresseServeur.Text, txt_Utilisateur.Text, txt_Mdp.Text, txt_NomBase.Text);
-            ClientManager cm = new ClientManager(txt_parcourir.Text, newConnexion);
-            cm.PushToDataBase();
-            Console.WriteLine(cm.GetRapport());
-            txt_rapport.Text = cm.GetRapport();
-            txt_Mdp.Enabled = false;
-            txt_NomBase.Enabled = false;
-            txt_Port.Enabled = false;
-            txt_AdresseServeur.Enabled = false;
-            txt_MailRapport.Enabled = true;
-            txt_Utilisateur.Enabled = false;
-            btn_Ajouter.Enabled = true;
-            btn_Transferer.Enabled = false;
-            btn_Supprimer.Enabled = false;
-            btn_DemRapport.Enabled = true;
+            if(txt_Mdp.Text != "" && txt_Mdp.Text != "" && txt_Mdp.Text != "" && txt_Mdp.Text != "" && txt_Mdp.Text != "" && txt_Mdp.Text != "" && txt_Mdp.Text != "")
+            {
+                lbl_erreur.Text = "";
+                try
+                {
+                    DAOClient newConnexion = new DAOClient(txt_AdresseServeur.Text, txt_Utilisateur.Text, txt_Mdp.Text, txt_NomBase.Text);
+                    ClientManager cm = new ClientManager(txt_parcourir.Text, newConnexion);
+                    cm.PushToDataBase();
+                    Console.WriteLine(cm.GetRapport());
+                    txt_rapport.Text = cm.GetRapport();
+                    txt_Mdp.Enabled = false;
+                    txt_NomBase.Enabled = false;
+                    txt_Port.Enabled = false;
+                    txt_AdresseServeur.Enabled = false;
+                    txt_MailRapport.Enabled = true;
+                    txt_Utilisateur.Enabled = false;
+                    btn_Ajouter.Enabled = true;
+                    btn_Transferer.Enabled = false;
+                    btn_Supprimer.Enabled = false;
+                    btn_DemRapport.Enabled = true;
+                }
+                catch (Exception ex)
+                {
+                    erreurIcone.SetError(txt_parcourir, "Aucun fichier a été selectionné !");
+                }
+            }
+            else
+            {
+                lbl_erreur.Text = "Certain champs ne sont pas rensegné !";
+            }
+          
+
         }
 
         private void btn_DemRapport_Click(object sender, EventArgs e)

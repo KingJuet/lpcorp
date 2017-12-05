@@ -47,7 +47,7 @@ namespace RH_Donnees
         public void AjouterDesClients(List<Client> lstClients)
         {
             string commande1 = "INSERT INTO res_partner (name, street, zip, city, phone, fax, email, active) VALUES ";
-            string commande2 = "INSERT INTO ir_property (name, res_id) VALUES ";
+            string commande2 = "";
             for (int i = 0; i < lstClients.Count; i++)
             {
 
@@ -64,22 +64,15 @@ namespace RH_Donnees
 
             }
             commande1 += ";";
-
+            commande1 += "UPDATE res_partner SET name = null WHERE name = ''; UPDATE res_partner SET street = null WHERE street = ''; UPDATE res_partner SET zip = null WHERE zip = ''; UPDATE res_partner SET city = null WHERE city = ''; UPDATE res_partner SET phone = null WHERE phone = ''; UPDATE res_partner SET fax = null WHERE fax = ''; UPDATE res_partner SET email = null WHERE email = ''; ";
             for (int i = 0; i < lstClients.Count; i++)
             {
 
-
-
-                commande2 += "(" + "'" + lstClients[i].Reglement + "'" + ", " + "'res.patner," + lstClients[i].Id.ToString() +"'"+ ")";
-
-
-                if (i < lstClients.Count - 1)
-                {
-                    commande2 += ",";
-                }
+                commande2 += "INSERT INTO account_payment_term (name) SELECT ('" + lstClients[i].Reglement + "') WHERE NOT EXISTS (SELECT 1 FROM account_payment_term WHERE name = '" + lstClients[i].Reglement + "');";
 
             }
-            commande2 += ";";
+            
+            commande2 += "UPDATE account_payment_term SET name = null WHERE name = 'null';";
 
             try
             {
@@ -95,6 +88,7 @@ namespace RH_Donnees
                 cmd.CommandText = commande2;
 
                 cmd.ExecuteNonQuery();
+
 
                 conn.Close();
             }
