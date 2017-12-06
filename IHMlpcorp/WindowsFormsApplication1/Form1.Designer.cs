@@ -249,6 +249,7 @@
             this.txt_rapport.Multiline = true;
             this.txt_rapport.Name = "txt_rapport";
             this.txt_rapport.ReadOnly = true;
+            this.txt_rapport.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.txt_rapport.Size = new System.Drawing.Size(322, 144);
             this.txt_rapport.TabIndex = 20;
             // 
@@ -290,6 +291,7 @@
             this.Controls.Add(this.btn_Parcourir);
             this.Name = "LPCORP_Frm";
             this.Text = "LP.CORP";
+            this.Load += new System.EventHandler(this.LPCORP_Frm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

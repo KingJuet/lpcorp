@@ -7,6 +7,9 @@ using lpcorp_metier;
 using Npgsql;
 namespace RH_Donnees
 {
+    /// <summary>
+    /// Classe : Pour exécuter les requetes concerant l'insertion des clients dans la base de données
+    /// </summary>
     public class DAOClient
     {
         private Connection connexion;
@@ -33,7 +36,7 @@ namespace RH_Donnees
                 cmd.Parameters.AddWithValue("p6", unClient.Tel);
                 cmd.Parameters.AddWithValue("p7", unClient.Fax);
                 cmd.Parameters.AddWithValue("p8", unClient.Email);
-                //cmd.Parameters.AddWithValue("p9", unClient.Actif);
+                cmd.Parameters.AddWithValue("p9", unClient.Actif);
                 cmd.ExecuteNonQuery();
                 conn.Close();
             }
@@ -44,10 +47,14 @@ namespace RH_Donnees
             
         }
 
+        /// <summary>
+        /// Insert la liste de clients dans la base de données 
+        /// </summary>
+        /// <param name="lstClients">Liste des clients</param>
         public void AjouterDesClients(List<Client> lstClients)
         {
             string commande1 = "INSERT INTO res_partner (name, street, zip, city, phone, fax, email, active) VALUES ";
-
+            // Insertion dans la table res_partner
             for (int i = 0; i < lstClients.Count; i++)
             {
                 commande1 += "(" + "'"+lstClients[i].RaisonSociale + "'"+ ", " +  "'" +lstClients[i].Adresse + "'" + ", " + "'" + lstClients[i].Cp + "'" + ", "+
@@ -61,6 +68,8 @@ namespace RH_Donnees
             }
             commande1 += ";";
             commande1 += "UPDATE res_partner SET name = null WHERE name = ''; UPDATE res_partner SET street = null WHERE street = ''; UPDATE res_partner SET zip = null WHERE zip = ''; UPDATE res_partner SET city = null WHERE city = ''; UPDATE res_partner SET phone = null WHERE phone = ''; UPDATE res_partner SET fax = null WHERE fax = ''; UPDATE res_partner SET email = null WHERE email = ''; ";
+
+            // Insertion dans la table account_payment_term
             for (int i = 0; i < lstClients.Count; i++)
             {
 
@@ -69,6 +78,8 @@ namespace RH_Donnees
             }
             
             commande1 += "UPDATE account_payment_term SET name = null WHERE name = 'null';";
+
+            // Insertion dans la table account_invoice
             for (int i = 0; i < lstClients.Count; i++)
             {
 
@@ -77,19 +88,19 @@ namespace RH_Donnees
             }
             try
             {
-                NpgsqlConnection conn = this.connexion.GetConnexion();
-                conn.Open();
+                NpgsqlConnection conn = this.connexion.GetConnexion(); // Etablir la connexion
+                conn.Open(); // Ouvrir la connexion
 
-                NpgsqlCommand cmd = new NpgsqlCommand();
-                cmd.Connection = conn;
-                cmd.CommandText = commande1;
+                NpgsqlCommand cmd = new NpgsqlCommand(); // Instanciation d'une commande
+                cmd.Connection = conn; // Liée la connexion à la commande
+                cmd.CommandText = commande1; // Donnée le text de commande 
 
-                cmd.ExecuteNonQuery();
-
-
+                cmd.ExecuteNonQuery(); //Exécuter la commande 
 
 
-                conn.Close();
+
+
+                conn.Close(); //Fermer la commande
             }
             catch (Exception e)
             {

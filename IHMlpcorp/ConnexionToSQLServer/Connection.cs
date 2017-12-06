@@ -7,6 +7,9 @@ using Npgsql;
 
 namespace RH_Donnees
 {
+    /// <summary>
+    /// Classe : Pour établir une connexion à une base de données
+    /// </summary>
     public class Connection
     {
         private string login;

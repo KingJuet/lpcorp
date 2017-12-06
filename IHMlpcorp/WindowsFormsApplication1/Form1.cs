@@ -80,7 +80,7 @@ namespace lpcorp_IHM
 
         private void btn_Transferer_Click(object sender, EventArgs e)
         {
-            if(txt_Mdp.Text != "" && txt_NomBase.Text != "" && txt_Port.Text != "" && txt_AdresseServeur.Text != ""  && txt_Utilisateur.Text != "")
+            if(txt_Mdp.Text != "" && txt_NomBase.Text != ""  && txt_AdresseServeur.Text != ""  && txt_Utilisateur.Text != "")
             {
                 lbl_erreur.Text = "";
                 try
@@ -88,7 +88,6 @@ namespace lpcorp_IHM
                     DAOClient newConnexion = new DAOClient(txt_AdresseServeur.Text, txt_Port.Text, txt_Utilisateur.Text, txt_Mdp.Text, txt_NomBase.Text);
                     this.cm = new ClientManager(txt_parcourir.Text, newConnexion);
                     this.cm.PushToDataBase();
-                    Console.WriteLine(this.cm.GetRapport());
                     txt_rapport.Text = this.cm.GetRapport();
                     txt_Mdp.Enabled = false;
                     txt_NomBase.Enabled = false;
@@ -136,13 +135,24 @@ namespace lpcorp_IHM
             {
                 Console.WriteLine("Executing finally block.");
             }
-            MailMessage mail = new MailMessage("testLpCorp@gmail.com", txt_AdresseServeur.Text, "Rapport d'importation", "Rapport d'importation en pièce jointe !");
-            mail.Attachments.Add(new Attachment("pièceJointe.txt"));
-            SmtpClient client = new SmtpClient("smtp.gmail.com");
-            client.Port = 587;
-            client.Credentials = new System.Net.NetworkCredential("testLpCorp@gmail.com", "jone51@12");
-            client.EnableSsl = true;
-            client.Send(mail);
+
+            try
+            {
+                erreurIcone.Clear();
+                MailMessage mail = new MailMessage("testLpCorp@gmail.com", txt_MailRapport.Text, "Rapport d'importation", "Rapport d'importation en pièce jointe !");
+                mail.Attachments.Add(new Attachment("pièceJointe.txt"));
+                SmtpClient client = new SmtpClient("smtp.gmail.com");
+                client.Port = 587;
+                client.Credentials = new System.Net.NetworkCredential("testLpCorp@gmail.com", "jone51@12");
+                client.EnableSsl = true;
+                client.Send(mail);
+            }
+            catch (Exception exep)
+            {
+                erreurIcone.SetError(txt_MailRapport, "Le mail est invalid !");
+            }
+
+            //File.Delete("pièceJointe.txt");
         }
 
         private void btn_Ajouter_Click(object sender, EventArgs e)
@@ -167,6 +177,12 @@ namespace lpcorp_IHM
             txt_AdresseServeur.Text = "";
             txt_MailRapport.Text = "";
             txt_Utilisateur.Text = "";
+        }
+
+        private void LPCORP_Frm_Load(object sender, EventArgs e)
+        {
+            txt_rapport.SelectionStart = txt_rapport.Text.Length;
+            txt_rapport.ScrollToCaret();
         }
     }
 }

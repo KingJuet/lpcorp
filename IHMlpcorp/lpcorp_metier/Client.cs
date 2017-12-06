@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace lpcorp_metier
 {
+
+    /// <summary>
+    /// Classe : Définie logiquement un client du coté applicatif
+    /// </summary>
     public class Client
     {
         private int id;

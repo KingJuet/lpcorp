@@ -8,11 +8,14 @@ using System.Text.RegularExpressions;
 using System.Net.Mail;
 namespace lpcorp_metier
 {
+    /// <summary>
+    /// Classe : Traite les fichiers .csv
+    /// </summary>
     public class CSV
     {
-        private string filePath; 
-        private StreamReader reader;
-        private Regex myRegex;
+        private string filePath;  // Chemin du fichier
+        private StreamReader reader; // Pour lire les fichiers
+        private Regex myRegex; // Pour effectuer des expressions régulières
       
 
         public CSV(string path)
@@ -29,32 +32,38 @@ namespace lpcorp_metier
         }
 
 
+        /// <summary>
+        /// Formate , construit le rapport en paramètre et retourne les données du csv
+        /// </summary>
+        /// <param name="rap">Instance d'un rapport sur lequel le formatage va écrire</param>
+        /// <returns></returns>
         public List<List<string>> Formater(Rapport rap)
         {
 
 
            
             
-            List<List<string>> lesData = new List<List<string>>();
-            List<string> laLigne = new List<string>();
-            bool inserer = false;
-            int ligne = 0;
-            if (this.filePath != "null")
+            List<List<string>> lesData = new List<List<string>>(); // Liste des données formaté retourné à la fin du programme
+            List<string> laLigne = new List<string>(); // Ligne tempon, permet de vérifié si une ligne est valide sinon on ne l'insère pas dans lesData
+            bool inserer = false; // Booléen qui détermine si une ligne peut-etres inséré
+            int ligne = 0; // Numero de la ligne à inséré
+            if (this.filePath != "null") // Si un chemin à bien été spécifié
             {
-                while (!reader.EndOfStream)
+                while (!reader.EndOfStream) // Tant que la lecture n'est pas arrivé à la fin du fichier csv
                 {
 
-                    string line = reader.ReadLine();
-                    string[] values = line.Split(';');
+                    string line = reader.ReadLine(); // On lit la ligne sous forme de format string
+                    string[] values = line.Split(';'); // On la découpe dans un tableau avec des ";" en critère de séparation pour le découpage
 
-
-                    rap.ErrorMessages += "------------------LIGNE " + rap.NbLignesTraitees + 1 + "------------------\r\n"; 
-                        for (int i = 0; i < values.Length; i++)
+                    int actualLingne = rap.NbLignesTraitees + 1; // Numéro de la ligne actuellement à traité
+                    rap.ErrorMessages += "------------------LIGNE " + actualLingne.ToString() + "------------------\r\n"; 
+                        for (int i = 0; i < values.Length; i++) // pour tout les élément de la ligne à traité
                         {
-                       
+                       //Supression des xxxxxxx pour toute collone traité
                         values[i].ToLower();
                         this.myRegex = new Regex("xxx+");
                         values[i] = this.myRegex.Replace(values[i], "");
+                        //--------------------------------------------------
 
                         switch (i)
                         {
@@ -147,7 +156,7 @@ namespace lpcorp_metier
                                 {
                                     values[i] = "";
                                     rap.NbInvalidEmail++;
-                                    rap.ErrorMessages += "Fax : Incorect \r\n";
+                                    rap.ErrorMessages += "Email : Incorect \r\n";
                                 }
                                 else
                                 {
@@ -191,21 +200,23 @@ namespace lpcorp_metier
                         }
                         values[i] = values[i].Replace("'", "");
 
-                        laLigne.Add(values[i]);
+                        laLigne.Add(values[i]); 
                         
                         }
-                    if (inserer)
+                    
+                    if (inserer) // Si la ligne peut etres inséré
                     {
-                        lesData.Add(laLigne.ToList());
-                        ligne++;
-                        inserer = false;
-                        rap.NbLignesInserees++;
+                        lesData.Add(laLigne.ToList()); // On l'ajoute à la liste des ligne traité
+                        ligne++; // on passe a la ligne suivante à inséré
+                        inserer = false;   
+                        rap.NbLignesInserees++; // Ajout d'une ligne traité au compteur
                     }else
                     {
-                        rap.ErrorMessages += "LIGNE "+ rap.NbLignesTraitees.ToString() + "n'a pas été insérée ! \r\n";
+                        rap.ErrorMessages += "LIGNE "+ actualLingne.ToString() + " n'a pas été insérée ! \r\n";
                     }
-                    laLigne.Clear();
-                    rap.NbLignesTraitees++;
+                    //Avant de passer à la prochaine ligne du csv
+                    laLigne.Clear(); // On clear le list de ligne tempon  
+                    rap.NbLignesTraitees++; // On incrémente le compteur de lignes taitées
                 }
                 
             }
@@ -214,7 +225,7 @@ namespace lpcorp_metier
                 Console.WriteLine("Aucun fichier n'a été chargé !");
             }
             
-            //Console.WriteLine(this.data[1].Count.ToString());
+            
             return lesData;
         }
 
