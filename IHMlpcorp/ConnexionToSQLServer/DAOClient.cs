@@ -7,13 +7,18 @@ using lpcorp_metier;
 using Npgsql;
 namespace RH_Donnees
 {
-    public static class DAOClient
+    public class DAOClient
     {
-        public static void AjouterClient(Client unClient)
+        private Connection connexion;
+        public DAOClient(string adresse, string login, string password, string bddName)
+        {
+            this.connexion = new Connection(login, password, adresse, bddName);
+        }
+        public void AjouterClient(Client unClient)
         {
             try
             {
-                NpgsqlConnection conn = Connection.Connexion("localhost", "julien", "zone51@", "lpcorp");
+                NpgsqlConnection conn = this.connexion.GetConnexion();
                 conn.Open();
 
                 NpgsqlCommand cmd = new NpgsqlCommand();
@@ -39,37 +44,52 @@ namespace RH_Donnees
         }
 
 
-        public static void AjouterDesClients(List<Client> lstClients)
+        public void AjouterDesClients(List<Client> lstClients)
         {
-            string commande = "INSERT INTO res_partner (name, street, zip, city, phone, fax, email, active) VALUES ";
-            
+            string commande1 = "INSERT INTO res_partner (name, street, zip, city, phone, fax, email, active) VALUES ";
+            string commande2 = "";
             for (int i = 0; i < lstClients.Count; i++)
             {
 
 
-                
-                commande += "(" + "'"+lstClients[i].RaisonSociale + "'"+ ", " +  "'" +lstClients[i].Adresse + "'" + ", " + "'" + lstClients[i].Cp + "'" + ", "+
+
+                commande1 += "(" + "'"+lstClients[i].RaisonSociale + "'"+ ", " +  "'" +lstClients[i].Adresse + "'" + ", " + "'" + lstClients[i].Cp + "'" + ", "+
                             "'" + lstClients[i].Ville + "'" + ", " + "'" + lstClients[i].Tel + "'" + ", " + "'" + lstClients[i].Fax + "'" + ", " + "'" + lstClients[i].Email + "'" + ", " + lstClients[i].Actif + ")";
 
 
                 if (i < lstClients.Count - 1)
                 {
-                    commande += ",";
+                    commande1 += ",";
                 }
 
             }
-            commande += ";";
+            commande1 += ";";
+            commande1 += "UPDATE res_partner SET name = null WHERE name = ''; UPDATE res_partner SET street = null WHERE street = ''; UPDATE res_partner SET zip = null WHERE zip = ''; UPDATE res_partner SET city = null WHERE city = ''; UPDATE res_partner SET phone = null WHERE phone = ''; UPDATE res_partner SET fax = null WHERE fax = ''; UPDATE res_partner SET email = null WHERE email = ''; ";
+            for (int i = 0; i < lstClients.Count; i++)
+            {
+
+                commande2 += "INSERT INTO account_payment_term (name) SELECT ('" + lstClients[i].Reglement + "') WHERE NOT EXISTS (SELECT 1 FROM account_payment_term WHERE name = '" + lstClients[i].Reglement + "');";
+
+            }
+            
+            commande2 += "UPDATE account_payment_term SET name = null WHERE name = 'null';";
 
             try
             {
-                NpgsqlConnection conn = Connection.Connexion("localhost", "julien", "zone51@", "lpcorp");
+                NpgsqlConnection conn = this.connexion.GetConnexion();
                 conn.Open();
 
                 NpgsqlCommand cmd = new NpgsqlCommand();
                 cmd.Connection = conn;
-                cmd.CommandText = commande;
+                cmd.CommandText = commande1;
 
                 cmd.ExecuteNonQuery();
+
+                cmd.CommandText = commande2;
+
+                cmd.ExecuteNonQuery();
+
+
                 conn.Close();
             }
             catch (Exception e)

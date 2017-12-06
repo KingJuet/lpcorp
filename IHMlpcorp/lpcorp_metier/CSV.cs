@@ -5,13 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Text.RegularExpressions;
-
+using System.Net.Mail;
 namespace lpcorp_metier
 {
     public class CSV
     {
         private string filePath; 
-        private List<List<string>> data;
         private StreamReader reader;
         private Regex myRegex;
       
@@ -20,7 +19,6 @@ namespace lpcorp_metier
         {
             this.filePath = path;
             this.reader = new StreamReader(path);
-            this.data = new List<List<string>>();
             myRegex = new Regex("([a-z]+|[A-Z]+)");
         }
 
@@ -30,18 +28,16 @@ namespace lpcorp_metier
             return this.filePath;
         }
 
-        public List<List<string>> GetData()
-        {
-            return this.data;
-        }
 
-        public List<List<string>> Formater()
+        public List<List<string>> Formater(Rapport rap)
         {
             string isAPhone = "[0-9]{10}";
             string delete = "(\\.|\\-|,|\"|'| )";
             string containeChars = "([a-z]+|[A-Z]+)";
             string idem = "IDEM";
             List<List<string>> lesData = new List<List<string>>();
+            List<string> laLigne = new List<string>();
+            bool inserer = false;
             int ligne = 0;
             if (this.filePath != "null")
             {
@@ -52,7 +48,7 @@ namespace lpcorp_metier
                     string[] values = line.Split(';');
 
 
-                        lesData.Add(new List<string>());
+
                         for (int i = 0; i < values.Length; i++)
                         {
                         switch (i)
@@ -60,14 +56,19 @@ namespace lpcorp_metier
                             case 1: // Raison social
                                 break;
                             case 2: // Adresse
+                                this.myRegex = new Regex("");
+                                if (!this.myRegex.IsMatch(values[i]))
+                                {
+                                    inserer = true;
+                                }
+                                
                                 break;
                             case 3: // CP
-                                this.myRegex = new Regex("[0-9]{5}");
+                                this.myRegex = new Regex("^[0-9]{5}$");
                                 if (!this.myRegex.IsMatch(values[i]))
                                 {
                                     values[i] = "";
                                 }
-                                values[i] = this.myRegex.Replace(values[i], "");
                                 break;
                             case 4: // Ville
                                 break;
@@ -87,6 +88,10 @@ namespace lpcorp_metier
                                 {
                                 values[i] = "";
                                 }
+                                else
+                                {
+                                    inserer = true;
+                                }
 
                                 break;
                             case 6: // Fax
@@ -104,8 +109,27 @@ namespace lpcorp_metier
                                 {
                                     values[i] = "";
                                 }
+                                else
+                                {
+                                    inserer = true;
+                                }
                                 break;
                             case 7: // Email
+
+                                values[i] = Regex.Replace(values[i], "[A-Z]*", m => " " + m.ToString().ToLower(), RegexOptions.IgnoreCase);
+                                this.myRegex = new Regex(" ");
+                                values[i] = this.myRegex.Replace(values[i], "");
+
+                                this.myRegex = new Regex(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$");
+                                if (!this.myRegex.IsMatch(values[i]))
+                                {
+                                 values[i] = "";
+                                    rap.NbInvalidEmail++;
+                                }
+                                else
+                                {
+                                    inserer = true;
+                                }
                                 break;
                             case 8: // Actif
                                 this.myRegex = new Regex("((o|O)ui|(n|N)on)");
@@ -137,20 +161,28 @@ namespace lpcorp_metier
                                 break;
                         }
                         values[i] = values[i].Replace("'", "");
-                        //values[i] = values[i].Replace("\"", "");
-                        //values[i] = values[i].Replace(".", "");
-                        //values[i] = values[i].Replace("-", "");
-                        //values[i] = values[i].Replace(",", "");
-                        lesData[ligne].Add(values[i]);
+
+                        laLigne.Add(values[i]);
+                        
                         }
-                    ligne++;
+                    if (inserer)
+                    {
+                        lesData.Add(laLigne.ToList());
+                        ligne++;
+                        inserer = false;
+                        rap.NbLignesInserees++;
+                    }
+                    laLigne.Clear();
+                    rap.NbLignesTraitees++;
                 }
+                
             }
             else
             {
                 Console.WriteLine("Aucun fichier n'a été chargé !");
             }
-            this.data = lesData;
+            
+            //Console.WriteLine(this.data[1].Count.ToString());
             return lesData;
         }
 
