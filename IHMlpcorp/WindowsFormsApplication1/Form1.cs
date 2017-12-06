@@ -76,12 +76,12 @@ namespace lpcorp_IHM
 
         private void btn_Transferer_Click(object sender, EventArgs e)
         {
-            if(txt_Mdp.Text != "" && txt_Mdp.Text != "" && txt_Mdp.Text != "" && txt_Mdp.Text != "" && txt_Mdp.Text != "" && txt_Mdp.Text != "" && txt_Mdp.Text != "")
+            if(txt_Mdp.Text != "" && txt_NomBase.Text != "" && txt_Port.Text != "" && txt_AdresseServeur.Text != ""  && txt_Utilisateur.Text != "")
             {
                 lbl_erreur.Text = "";
                 try
                 {
-                    DAOClient newConnexion = new DAOClient(txt_AdresseServeur.Text, txt_Utilisateur.Text, txt_Mdp.Text, txt_NomBase.Text);
+                    DAOClient newConnexion = new DAOClient(txt_AdresseServeur.Text, txt_Port.Text, txt_Utilisateur.Text, txt_Mdp.Text, txt_NomBase.Text);
                     ClientManager cm = new ClientManager(txt_parcourir.Text, newConnexion);
                     cm.PushToDataBase();
                     Console.WriteLine(cm.GetRapport());
@@ -99,12 +99,12 @@ namespace lpcorp_IHM
                 }
                 catch (Exception ex)
                 {
-                    erreurIcone.SetError(txt_parcourir, "Aucun fichier a été selectionné !");
+                    erreurIcone.SetError(txt_parcourir, "Aucun fichier n'a été selectionné !");
                 }
             }
             else
             {
-                lbl_erreur.Text = "Certain champs ne sont pas rensegné !";
+                lbl_erreur.Text = "Certains champs n'ont pas été renseigné !";
             }
           
 

@@ -31,10 +31,10 @@ namespace lpcorp_metier
 
         public List<List<string>> Formater(Rapport rap)
         {
-            string isAPhone = "[0-9]{10}";
-            string delete = "(\\.|\\-|,|\"|'| )";
-            string containeChars = "([a-z]+|[A-Z]+)";
-            string idem = "IDEM";
+
+
+           
+            
             List<List<string>> lesData = new List<List<string>>();
             List<string> laLigne = new List<string>();
             bool inserer = false;
@@ -48,18 +48,27 @@ namespace lpcorp_metier
                     string[] values = line.Split(';');
 
 
-
+                    rap.ErrorMessages += "------------------LIGNE " + rap.NbLignesTraitees + 1 + "------------------\r\n"; 
                         for (int i = 0; i < values.Length; i++)
                         {
                         switch (i)
                         {
-                            case 1: // Raison social
+                            case 1: // Raison sociale
+                                this.myRegex = new Regex("");
+                                if (!this.myRegex.IsMatch(values[i]))
+                                {
+                                    rap.ErrorMessages += "Raison Sociale : vide \r\n";
+                                }
                                 break;
                             case 2: // Adresse
                                 this.myRegex = new Regex("");
                                 if (!this.myRegex.IsMatch(values[i]))
                                 {
                                     inserer = true;
+
+                                }else
+                                {
+                                    rap.ErrorMessages += "Adresse : vide \r\n";
                                 }
                                 
                                 break;
@@ -68,25 +77,32 @@ namespace lpcorp_metier
                                 if (!this.myRegex.IsMatch(values[i]))
                                 {
                                     values[i] = "";
+                                    rap.ErrorMessages += "Code Postal : Incorect \r\n";
                                 }
                                 break;
                             case 4: // Ville
+                                this.myRegex = new Regex("");
+                                if (!this.myRegex.IsMatch(values[i]))
+                                {
+                                    rap.ErrorMessages += "Ville : vide \r\n";
+                                }
                                 break;
                             case 5: // Tel
                                 
-                                this.myRegex = new Regex(delete);
+                                this.myRegex = new Regex("(\\.|\\-|,|\"|'| )");
                                 values[i] = this.myRegex.Replace(values[i], "");
 
-                                this.myRegex = new Regex(idem);
+                                this.myRegex = new Regex("IDEM");
                                 values[i] = this.myRegex.Replace(values[i], values[6]);
 
-                                this.myRegex = new Regex(containeChars);
+                                this.myRegex = new Regex("([a-z]+|[A-Z]+)");
                                 values[i] = this.myRegex.Replace(values[i], "");
 
-                                this.myRegex = new Regex(isAPhone);
+                                this.myRegex = new Regex("[0 - 9]{ 10}");
                                 if (!this.myRegex.IsMatch(values[i]))
                                 {
-                                values[i] = "";
+                                   values[i] = "";
+                                   rap.ErrorMessages += "Téléphone : Incorect \r\n";
                                 }
                                 else
                                 {
@@ -95,19 +111,20 @@ namespace lpcorp_metier
 
                                 break;
                             case 6: // Fax
-                                this.myRegex = new Regex(delete);
+                                this.myRegex = new Regex("(\\.|\\-|,|\"|'| )");
                                 values[i] = this.myRegex.Replace(values[i], "");
 
-                                this.myRegex = new Regex(idem);
+                                this.myRegex = new Regex("IDEM");
                                 values[i] = this.myRegex.Replace(values[i], values[5]);
 
-                                this.myRegex = new Regex(containeChars);
+                                this.myRegex = new Regex("([a-z]+|[A-Z]+)");
                                 values[i] = this.myRegex.Replace(values[i], "");
 
-                                this.myRegex = new Regex(isAPhone);
+                                this.myRegex = new Regex("[0-9]{10}");
                                 if (!this.myRegex.IsMatch(values[i]))
                                 {
                                     values[i] = "";
+                                    rap.ErrorMessages += "Fax : Incorect \r\n";
                                 }
                                 else
                                 {
@@ -123,8 +140,9 @@ namespace lpcorp_metier
                                 this.myRegex = new Regex(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$");
                                 if (!this.myRegex.IsMatch(values[i]))
                                 {
-                                 values[i] = "";
+                                    values[i] = "";
                                     rap.NbInvalidEmail++;
+                                    rap.ErrorMessages += "Fax : Incorect \r\n";
                                 }
                                 else
                                 {
@@ -146,6 +164,7 @@ namespace lpcorp_metier
                                         if (this.myRegex.IsMatch(values[i]))
                                         {
                                             values[i] = this.myRegex.Replace(values[i], "false");
+                                            rap.ErrorMessages += "Le client est condidéré comme innactif car le champ est incorect \r\n";
                                         }     
 
                                     }
@@ -158,6 +177,11 @@ namespace lpcorp_metier
                                 
                                 break;
                             case 9: // Reglement
+                                this.myRegex = new Regex("");
+                                if (!this.myRegex.IsMatch(values[i]))
+                                {
+                                    rap.ErrorMessages += "Reglement : Vide \r\n";
+                                }
                                 break;
                         }
                         values[i] = values[i].Replace("'", "");
@@ -171,6 +195,9 @@ namespace lpcorp_metier
                         ligne++;
                         inserer = false;
                         rap.NbLignesInserees++;
+                    }else
+                    {
+                        rap.ErrorMessages += "LIGNE "+ rap.NbLignesTraitees.ToString() + "n'a pas été insérée ! \r\n";
                     }
                     laLigne.Clear();
                     rap.NbLignesTraitees++;

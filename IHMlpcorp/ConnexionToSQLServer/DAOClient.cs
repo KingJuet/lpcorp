@@ -10,10 +10,11 @@ namespace RH_Donnees
     public class DAOClient
     {
         private Connection connexion;
-        public DAOClient(string adresse, string login, string password, string bddName)
+        public DAOClient(string adresse, string unPort, string login, string password, string bddName)
         {
-            this.connexion = new Connection(login, password, adresse, bddName);
+            this.connexion = new Connection(login, password, adresse, unPort, bddName);
         }
+
         public void AjouterClient(Client unClient)
         {
             try
@@ -43,19 +44,14 @@ namespace RH_Donnees
             
         }
 
-
         public void AjouterDesClients(List<Client> lstClients)
         {
             string commande1 = "INSERT INTO res_partner (name, street, zip, city, phone, fax, email, active) VALUES ";
-            string commande2 = "";
+
             for (int i = 0; i < lstClients.Count; i++)
             {
-
-
-
                 commande1 += "(" + "'"+lstClients[i].RaisonSociale + "'"+ ", " +  "'" +lstClients[i].Adresse + "'" + ", " + "'" + lstClients[i].Cp + "'" + ", "+
                             "'" + lstClients[i].Ville + "'" + ", " + "'" + lstClients[i].Tel + "'" + ", " + "'" + lstClients[i].Fax + "'" + ", " + "'" + lstClients[i].Email + "'" + ", " + lstClients[i].Actif + ")";
-
 
                 if (i < lstClients.Count - 1)
                 {
@@ -68,12 +64,17 @@ namespace RH_Donnees
             for (int i = 0; i < lstClients.Count; i++)
             {
 
-                commande2 += "INSERT INTO account_payment_term (name) SELECT ('" + lstClients[i].Reglement + "') WHERE NOT EXISTS (SELECT 1 FROM account_payment_term WHERE name = '" + lstClients[i].Reglement + "');";
+                commande1 += "INSERT INTO account_payment_term (name) SELECT ('" + lstClients[i].Reglement + "') WHERE NOT EXISTS (SELECT 1 FROM account_payment_term WHERE name = '" + lstClients[i].Reglement + "');";
 
             }
             
-            commande2 += "UPDATE account_payment_term SET name = null WHERE name = 'null';";
+            commande1 += "UPDATE account_payment_term SET name = null WHERE name = 'null';";
+            for (int i = 0; i < lstClients.Count; i++)
+            {
 
+                commande1 += "INSERT INTO account_invoice (partner_id, payment_term_id) SELECT (SELECT id FROM res_partner WHERE name = '" + lstClients[i].RaisonSociale + "' AND phone = '" + lstClients[i].Tel + "' LIMIT 1), (SELECT id FROM account_payment_term WHERE name = '" + lstClients[i].Reglement + "' LIMIT 1);";
+
+            }
             try
             {
                 NpgsqlConnection conn = this.connexion.GetConnexion();
@@ -85,9 +86,7 @@ namespace RH_Donnees
 
                 cmd.ExecuteNonQuery();
 
-                cmd.CommandText = commande2;
 
-                cmd.ExecuteNonQuery();
 
 
                 conn.Close();

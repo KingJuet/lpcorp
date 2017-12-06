@@ -14,13 +14,18 @@ namespace lpcorp_metier
         private int nbLignesInserees;
         private int nbDoublon;
         private int nbInvalidEmail;
-
+        private string errorMessages;
 
 
         public Rapport(string pathFile)
         {
             this.file = new CSV(pathFile);
-        }
+            this.nbLignesTraitees = 0;
+            this.nbLignesInserees = 0;
+            this.nbDoublon = 0;
+            this.nbInvalidEmail = 0;
+            this.errorMessages = "";
+    }
 
         public List<List<string>> GetRapport()
         {
@@ -34,7 +39,9 @@ namespace lpcorp_metier
                     + "Lignes Traitées : " + this.nbLignesTraitees + "\r\n"
                     + "Lignes Insérées : " + this.nbLignesInserees + "\r\n"
                     + "Doublons : " + this.nbDoublon + "\r\n"
-                    + "Emails invalides : " + this.nbInvalidEmail + "\r\n";
+                    + "Emails invalides : " + this.nbInvalidEmail + "\r\n"
+                    + "\r\n"
+                    + this.errorMessages + "\r\n";
         }
         public int NbLignesTraitees
         {
@@ -85,6 +92,19 @@ namespace lpcorp_metier
             set
             {
                 nbInvalidEmail = value;
+            }
+        }
+
+        public string ErrorMessages
+        {
+            get
+            {
+                return errorMessages;
+            }
+
+            set
+            {
+                errorMessages = value;
             }
         }
     }
