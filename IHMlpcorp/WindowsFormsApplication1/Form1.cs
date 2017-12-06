@@ -11,6 +11,8 @@ using Metier_Manager;
 using System.Web;
 using System.Net.Mail;
 using RH_Donnees;
+using System.IO;
+
 namespace lpcorp_IHM
 
 {
@@ -18,17 +20,19 @@ namespace lpcorp_IHM
     {
         string fileLink;
         ErrorProvider erreurIcone;
+        ClientManager cm;
         public LPCORP_Frm()
         {
             InitializeComponent();
             erreurIcone = new ErrorProvider();
+            cm = null;
         }
 
         private void btn_Parcourir_Click(object sender, EventArgs e)
         {
 
             OpenFileDialog openFile = new OpenFileDialog();
-            openFile.DefaultExt = "xls";
+            openFile.DefaultExt = "csv";
             openFile.Filter = "Fichier MapInfoFormat (*.csv)|*.csv";
             openFile.RestoreDirectory = true;
 
@@ -82,10 +86,10 @@ namespace lpcorp_IHM
                 try
                 {
                     DAOClient newConnexion = new DAOClient(txt_AdresseServeur.Text, txt_Port.Text, txt_Utilisateur.Text, txt_Mdp.Text, txt_NomBase.Text);
-                    ClientManager cm = new ClientManager(txt_parcourir.Text, newConnexion);
-                    cm.PushToDataBase();
-                    Console.WriteLine(cm.GetRapport());
-                    txt_rapport.Text = cm.GetRapport();
+                    this.cm = new ClientManager(txt_parcourir.Text, newConnexion);
+                    this.cm.PushToDataBase();
+                    Console.WriteLine(this.cm.GetRapport());
+                    txt_rapport.Text = this.cm.GetRapport();
                     txt_Mdp.Enabled = false;
                     txt_NomBase.Enabled = false;
                     txt_Port.Enabled = false;
@@ -112,10 +116,31 @@ namespace lpcorp_IHM
 
         private void btn_DemRapport_Click(object sender, EventArgs e)
         {
-            MailMessage mail = new MailMessage("", txt_AdresseServeur.Text, "Rapport d'importation", txt_rapport.Text);
+            try
+            {
+
+                //Pass the filepath and filename to the StreamWriter Constructor
+                StreamWriter sw = new StreamWriter("pièceJointe.txt");
+
+                //Write a line of text
+                sw.Write(txt_rapport.Text);
+
+                //Close the file
+                sw.Close();
+            }
+            catch (Exception exep)
+            {
+                Console.WriteLine("Exception: " + exep.Message);
+            }
+            finally
+            {
+                Console.WriteLine("Executing finally block.");
+            }
+            MailMessage mail = new MailMessage("testLpCorp@gmail.com", txt_AdresseServeur.Text, "Rapport d'importation", "Rapport d'importation en pièce jointe !");
+            mail.Attachments.Add(new Attachment("pièceJointe.txt"));
             SmtpClient client = new SmtpClient("smtp.gmail.com");
             client.Port = 587;
-            client.Credentials = new System.Net.NetworkCredential("", "");
+            client.Credentials = new System.Net.NetworkCredential("testLpCorp@gmail.com", "jone51@12");
             client.EnableSsl = true;
             client.Send(mail);
         }

@@ -51,6 +51,11 @@ namespace lpcorp_metier
                     rap.ErrorMessages += "------------------LIGNE " + rap.NbLignesTraitees + 1 + "------------------\r\n"; 
                         for (int i = 0; i < values.Length; i++)
                         {
+                       
+                        values[i].ToLower();
+                        this.myRegex = new Regex("xxx+");
+                        values[i] = this.myRegex.Replace(values[i], "");
+
                         switch (i)
                         {
                             case 1: // Raison sociale

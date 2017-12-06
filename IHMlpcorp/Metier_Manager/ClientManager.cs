@@ -11,11 +11,9 @@ namespace Metier_Manager
     {
         private Rapport rapport;
         private List<Client> lesClients;
-        private bool isTreat;
         private DAOClient pusher;
         public ClientManager(string path, DAOClient uneConnexion)
         {
-            this.isTreat = false;
             this.rapport = new Rapport(path);
             this.lesClients = new List<Client>();
             this.pusher = uneConnexion;
