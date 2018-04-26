@@ -27,7 +27,7 @@ namespace RH_Donnees
 
                 NpgsqlCommand cmd = new NpgsqlCommand();
                 cmd.Connection = conn;
-                cmd.CommandText = "INSERT INTO res_partner (id, name, street, zip, city, phone, fax, email, active) VALUES (@p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, false);";
+                cmd.CommandText = "INSERT INTO res_partner (id, name, street, zip, city, phone, fax, email, active, customer) VALUES (@p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10);";
                 cmd.Parameters.AddWithValue("p1", unClient.Id);
                 cmd.Parameters.AddWithValue("p2", unClient.RaisonSociale);
                 cmd.Parameters.AddWithValue("p3", unClient.Adresse);
@@ -37,12 +37,13 @@ namespace RH_Donnees
                 cmd.Parameters.AddWithValue("p7", unClient.Fax);
                 cmd.Parameters.AddWithValue("p8", unClient.Email);
                 cmd.Parameters.AddWithValue("p9", unClient.Actif);
+                cmd.Parameters.AddWithValue("p10", true);
                 cmd.ExecuteNonQuery();
                 conn.Close();
             }
             catch(Exception e)
             {
-                Console.WriteLine(e.Message);
+                Console.WriteLine("ERREUR IDENTIFICATION " + e.Message);
             }
             
         }
@@ -53,12 +54,12 @@ namespace RH_Donnees
         /// <param name="lstClients">Liste des clients</param>
         public void AjouterDesClients(List<Client> lstClients)
         {
-            string commande1 = "INSERT INTO res_partner (name, street, zip, city, phone, fax, email, active) VALUES ";
+            string commande1 = "INSERT INTO res_partner (name, street, zip, city, phone, fax, email, active, customer) VALUES ";
             // Insertion dans la table res_partner
             for (int i = 0; i < lstClients.Count; i++)
             {
                 commande1 += "(" + "'"+lstClients[i].RaisonSociale + "'"+ ", " +  "'" +lstClients[i].Adresse + "'" + ", " + "'" + lstClients[i].Cp + "'" + ", "+
-                            "'" + lstClients[i].Ville + "'" + ", " + "'" + lstClients[i].Tel + "'" + ", " + "'" + lstClients[i].Fax + "'" + ", " + "'" + lstClients[i].Email + "'" + ", " + lstClients[i].Actif + ")";
+                            "'" + lstClients[i].Ville + "'" + ", " + "'" + lstClients[i].Tel + "'" + ", " + "'" + lstClients[i].Fax + "'" + ", " + "'" + lstClients[i].Email + "'" + ", " + lstClients[i].Actif + ", true)";
 
                 if (i < lstClients.Count - 1)
                 {

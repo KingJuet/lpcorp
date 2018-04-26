@@ -29,9 +29,21 @@ namespace RH_Donnees
 
         public  NpgsqlConnection GetConnexion()
         {
-            NpgsqlConnection conn = new NpgsqlConnection("Server="+ this.adresse + ";Port="+ this.port + ";User Id="+ this.login + ";" +
-                                "Password="+ this.password + ";Database="+ this.bddName +";");
+            NpgsqlConnection conn = null;
+            try
+            {
+                    conn = new NpgsqlConnection("Server=" + this.adresse + ";Port=" + this.port + ";User Id=" + this.login + ";" +
+                   "Password=" + this.password + ";Database=" + this.bddName + ";");
+                
+            }
+            catch (NpgsqlException ex)
+            {
+                Console.WriteLine(ex);
+            }
+
+
             return conn;
+
         }
        
 

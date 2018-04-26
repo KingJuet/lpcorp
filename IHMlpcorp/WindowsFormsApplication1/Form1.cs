@@ -12,6 +12,7 @@ using System.Web;
 using System.Net.Mail;
 using RH_Donnees;
 using System.IO;
+using Npgsql;
 
 namespace lpcorp_IHM
 
@@ -85,25 +86,34 @@ namespace lpcorp_IHM
                 lbl_erreur.Text = "";
                 try
                 {
-                    DAOClient newConnexion = new DAOClient(txt_AdresseServeur.Text, txt_Port.Text, txt_Utilisateur.Text, txt_Mdp.Text, txt_NomBase.Text);
-                    this.cm = new ClientManager(txt_parcourir.Text, newConnexion);
-                    this.cm.PushToDataBase();
-                    txt_rapport.Text = this.cm.GetRapport();
-                    txt_Mdp.Enabled = false;
-                    txt_NomBase.Enabled = false;
-                    txt_Port.Enabled = false;
-                    txt_AdresseServeur.Enabled = false;
-                    txt_MailRapport.Enabled = true;
-                    txt_Utilisateur.Enabled = false;
-                    btn_Ajouter.Enabled = true;
-                    btn_Transferer.Enabled = false;
-                    btn_Supprimer.Enabled = false;
-                    btn_DemRapport.Enabled = true;
+                    try
+                    {
+                        DAOClient newConnexion = new DAOClient(txt_AdresseServeur.Text, txt_Port.Text, txt_Utilisateur.Text, txt_Mdp.Text, txt_NomBase.Text);
+                        this.cm = new ClientManager(txt_parcourir.Text, newConnexion);
+                        this.cm.PushToDataBase();
+                        txt_rapport.Text = this.cm.GetRapport();
+                        txt_Mdp.Enabled = false;
+                        txt_NomBase.Enabled = false;
+                        txt_Port.Enabled = false;
+                        txt_AdresseServeur.Enabled = false;
+                        txt_MailRapport.Enabled = true;
+                        txt_Utilisateur.Enabled = false;
+                        btn_Ajouter.Enabled = true;
+                        btn_Transferer.Enabled = false;
+                        btn_Supprimer.Enabled = false;
+                        btn_DemRapport.Enabled = true;
+                    }
+                    catch(NpgsqlException ex) {
+                        MessageBox.Show("Identifiants de la BDD incorrect", "ERREUR", MessageBoxButtons.OK);
+                    }
+                    
+                    
                 }
                 catch (Exception ex)
                 {
                     erreurIcone.SetError(txt_parcourir, "Aucun fichier n'a été selectionné !");
                 }
+
             }
             else
             {
